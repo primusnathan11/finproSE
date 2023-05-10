@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->unsignedbigInteger('id_supplier');
             $table->foreign('id_supplier')->references('id')->on('suppliers');
-            $table->string('product_name');
-            $table->string('image');
-            $table->integer('stock');
-            $table->bigInteger('price');
+            $table->unsignedbigInteger('id_customer');
+            $table->foreign('id_customer')->references('id')->on('users');
+            $table->enum('payment', ['BCA', 'Mandiri','BRI']);
+            $table->bigInteger('total_price');
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('transactions');
     }
 };
